@@ -10,8 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "classnames": "^2.5.1",
+    "lucide": "^0.546.0",
+    "lucide-react": "^0.546.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-error-boundary": "^6.0.0",
+    "react-router": "^7.9.4",
+    "tailwindcss": "^4.1.14",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
