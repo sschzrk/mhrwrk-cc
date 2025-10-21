@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/mhrwrk-cc/">
     <div className="lg:max-w-7xl lg:mx-auto w-full px-4">
       <App />
     </div>
