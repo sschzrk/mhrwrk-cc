@@ -167,7 +167,9 @@ export function useQuery<T>({
     cached = promiseCache.get(queryKey);
   }
 
-  const data = use(cached!.promise as Promise<T>);
+  if (cached!.data !== undefined) {
+    return cached!.data as T;
+  }
 
-  return data;
+  return use(cached!.promise as Promise<T>);
 }

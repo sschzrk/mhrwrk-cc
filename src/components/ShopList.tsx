@@ -3,7 +3,7 @@ import { fetchShops, useQuery } from "../fetch";
 
 export const ShopOveriew = () => {
   const shopData = useQuery({
-    queryKey: "shops",
+    queryKey: "shops-list",
     queryFn: () => fetchShops(),
   });
 

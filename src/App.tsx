@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router";
 import "./App.css";
 import { ShopDetail } from "./components/ShopDetail";
 import { ShopOveriew } from "./components/ShopList";
+import { ShopOverviewLoading } from "./components/ShopOverviewLoading";
+import { ShopDetailLoading } from "./components/ShopDetailLoading";
 
 function App() {
   return (
@@ -12,7 +14,7 @@ function App() {
         path="/"
         element={
           <ErrorBoundary fallback={<div>Error</div>}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<ShopOverviewLoading />}>
               <ShopOveriew />
             </Suspense>
           </ErrorBoundary>
@@ -22,7 +24,7 @@ function App() {
         path="/shop/:id"
         element={
           <ErrorBoundary fallback={<div>Error</div>}>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<ShopDetailLoading />}>
               <ShopDetail />
             </Suspense>
           </ErrorBoundary>

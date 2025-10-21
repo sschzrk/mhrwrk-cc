@@ -1,33 +1,34 @@
-import { useNavigate, useParams } from "react-router";
-import { fetchShopById, useQuery } from "../fetch";
 import { ArrowLeft } from "lucide-react";
+import { Link, useParams } from "react-router";
+import { fetchShopById, useQuery } from "../fetch";
+import { CashbackRateItem } from "./CashbackRateItem";
 
-const shopDescriptionNormalize = (description: string) => {
+const getShortPlainDescription = (description: string) => {
   const divElement = document.createElement("div");
   divElement.innerHTML = description;
-  return divElement.textContent || divElement.innerText || "";
+  const text = divElement.textContent || divElement.innerText || "";
+  return text.length > 140 ? text.slice(0, 140) + "…" : text;
 };
 
 export const ShopDetail = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
 
   const shop = useQuery({
-    queryKey: `shop-${id}`,
+    queryKey: `shop-detail-${id}`,
     queryFn: () => fetchShopById(id),
     options: { staleTime: 600 * 1000 },
   });
 
   return (
     <div className="min-h-screen rounded-lg my-8">
-      <div className="">
-        <button
-          onClick={() => navigate("/")}
-          className="mb-6 flex items-center hover:text-black transition-colors duration-300 px-0 py-2"
+      <div className="text-black">
+        <Link
+          to="/"
+          className="mb-6 flex items-center hover:text-black transition-colors duration-300 px-0 py-2 text-black/60"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Zurück zur Übersicht
-        </button>
+        </Link>
 
         <div className="bg-white/90 p-6 border border-black/20 rounded-lg">
           <div className="mb-6">
@@ -45,9 +46,7 @@ export const ShopDetail = () => {
                 </h2>
                 <div className="w-full">
                   <p className="text-black/60">
-                    {shopDescriptionNormalize(shop.description).slice(0, 140)}
-                    {shopDescriptionNormalize(shop.description).length > 140 &&
-                      "…"}
+                    {getShortPlainDescription(shop.description)}
                   </p>
                 </div>
               </div>
@@ -69,25 +68,11 @@ export const ShopDetail = () => {
               </div>
             </div>
 
-            {/* Cashback Rates */}
             <div>
               <h3 className="mb-3 text-black/90">Cashback-Raten</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {shop.cashbackRates.map((rate, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg"
-                  >
-                    <div className="mb-2">
-                      <span className="font-semibold text-green-700">
-                        {rate.amount.toLocaleString("de-DE", {
-                          minimumFractionDigits: 2,
-                        })}{" "}
-                        {rate.type}
-                      </span>
-                    </div>
-                    <span className="text-gray-700">{rate.description}</span>
-                  </div>
+                  <CashbackRateItem key={index} rate={rate} />
                 ))}
               </div>
             </div>
