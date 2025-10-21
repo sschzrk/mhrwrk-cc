@@ -16,14 +16,11 @@ const ShopTileLoading = () => {
   return (
     <div className="group overflow-hidden transition-all duration-300 relative bg-white/75 border border-black/10 rounded-lg">
       <div className="p-0">
-        {/* Logo Section with Gradient Background */}
         <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-4 flex items-center justify-center">
           <div className="w-28 h-20 rounded-2xl overflow-hidden bg-white shadow-sm animate-pulse"></div>
         </div>
 
-        {/* Content Section */}
         <div className="p-6 space-y-4">
-          {/* Shop Name */}
           <h3 className="text-center text-lg font-bold text-black/95 animate-pulse bg-gray-200 h-[28px] rounded-md"></h3>
 
           {/* Categories */}

@@ -38,9 +38,7 @@ export const ShopTile = ({ shop }: ShopTileProps) => {
           </div>
         </div>
 
-        {/* Content Section */}
         <div className="p-6 space-y-4">
-          {/* Shop Name */}
           <h3 className="text-center text-lg font-bold text-black/95">
             {shop.name}
           </h3>
