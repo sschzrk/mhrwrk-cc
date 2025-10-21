@@ -57,9 +57,9 @@ export const ShopDetail = () => {
             <div>
               <h3 className="mb-3 text-black/90">Kategorien</h3>
               <div className="flex flex-wrap gap-2">
-                {shop.categories.map((category, index) => (
+                {shop.categories.map((category) => (
                   <div
-                    key={index}
+                    key={category.id}
                     className="text-black/60 text-sm border p-2 rounded-lg"
                   >
                     {category.name}
@@ -72,7 +72,10 @@ export const ShopDetail = () => {
               <h3 className="mb-3 text-black/90">Cashback-Raten</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {shop.cashbackRates.map((rate, index) => (
-                  <CashbackRateItem key={index} rate={rate} />
+                  <CashbackRateItem
+                    key={`${rate.amount}-${rate.type}-${rate.description}-${index}`}
+                    rate={rate}
+                  />
                 ))}
               </div>
             </div>

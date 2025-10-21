@@ -22,7 +22,7 @@ export const fetchAuth = async (): Promise<AuthData> => {
     return tokenRefreshPromise;
   }
 
-  const promise = await fetch(
+  tokenRefreshPromise = fetch(
     "https://testapi.mehrwerk.de/v2/iam/oauth/token",
     {
       method: "POST",
@@ -36,16 +36,18 @@ export const fetchAuth = async (): Promise<AuthData> => {
         client_secret: import.meta.env.VITE_CLIENT_SECRET,
       }),
     }
-  );
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch auth data");
+      }
+      return response.json();
+    })
+    .finally(() => {
+      tokenRefreshPromise = null;
+    });
 
-  if (!promise.ok) {
-    throw new Error("Failed to fetch auth data");
-  }
-
-  const data = await promise.json();
-  tokenRefreshPromise = data;
-
-  return data;
+  return tokenRefreshPromise as Promise<AuthData>;
 };
 
 const onTokenRefresh = (newToken: string) => {

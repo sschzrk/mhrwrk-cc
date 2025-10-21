@@ -8,16 +8,17 @@ interface ShopTileProps {
 
 export const ShopTile = ({ shop }: ShopTileProps) => {
   const navigate = useNavigate();
-  const topCashbackRate = shop.cashbackRates.find(
-    (rate) =>
-      rate.amount === Math.max(...shop.cashbackRates.map((rate) => rate.amount))
-  );
+
+  const topCashbackRate =
+    shop.cashbackRates.length > 0
+      ? shop.cashbackRates.reduce(
+          (max, rate) => (rate.amount > max.amount ? rate : max),
+          shop.cashbackRates[0]
+        )
+      : null;
 
   return (
-    <button
-      onClick={() => navigate(`/shop/${shop.id}`, { viewTransition: false })}
-      className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer relative bg-white/75 border border-black/10 rounded-lg block text-black/60"
-    >
+    <div className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative bg-white/75 border border-black/10 rounded-lg block text-black/60">
       {/* Favorite Badge */}
       {shop.isFavorite && (
         <div className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-md">
@@ -46,9 +47,9 @@ export const ShopTile = ({ shop }: ShopTileProps) => {
 
           {/* Categories */}
           <div className="flex flex-wrap gap-2 justify-center">
-            {shop.categories.slice(0, 2).map((category, index) => (
+            {shop.categories.slice(0, 2).map((category) => (
               <div
-                key={index}
+                key={category.id}
                 className="text-xs bg-black/5 px-2 py-1 rounded-md"
               >
                 {category.name}
@@ -81,9 +82,7 @@ export const ShopTile = ({ shop }: ShopTileProps) => {
 
           {/* Action Button */}
           <button
-            onClick={() =>
-              navigate(`/shop/${shop.id}`, { viewTransition: false })
-            }
+            onClick={() => navigate(`/shop/${shop.id}`)}
             className="w-full group-hover:bg-primary/90 transition-colors flex items-center justify-center bg-white text-black/95 py-2 rounded-md border border-black/10"
           >
             Details ansehen
@@ -91,6 +90,6 @@ export const ShopTile = ({ shop }: ShopTileProps) => {
           </button>
         </div>
       </div>
-    </button>
+    </div>
   );
 };
